@@ -110,10 +110,9 @@ const PostCard = ({ post }) => {
 
     const getImageUrl = (url) => {
         if (!url) return '';
-        if (url.startsWith('/uploads')) {
-            return `http://localhost:5000${url}`;
-        }
-        return url;
+        if (url.startsWith('http')) return url; // Cloudinary or full URL
+        const baseUrl = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000';
+        return `${baseUrl}${url}`;
     };
 
     return (

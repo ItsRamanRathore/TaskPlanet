@@ -4,14 +4,23 @@ const auth = require('../middleware/auth');
 const multer = require('multer');
 const path = require('path');
 const Notification = require('../models/Notification');
+const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
-// Configure multer for image upload
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/');
-    },
-    filename: (req, file, cb) => {
-        cb(null, Date.now() + path.extname(file.originalname));
+// Configure Cloudinary
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+// Configure multer for Cloudinary upload
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+        folder: 'taskplanet_posts',
+        allowed_formats: ['jpg', 'jpeg', 'png', 'webp'],
+        transformation: [{ width: 800, height: 800, crop: 'limit' }]
     }
 });
 
@@ -60,7 +69,7 @@ router.post('/', auth, upload.single('image'), async (req, res) => {
         let imageUrl = '';
 
         if (req.file) {
-            imageUrl = `/uploads/${req.file.filename}`;
+            imageUrl = req.file.path; // Cloudinary returns the full SSL URL in .path
         }
 
         if (!content && !imageUrl) {
