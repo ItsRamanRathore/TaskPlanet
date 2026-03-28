@@ -70,7 +70,10 @@ const AppContent = () => {
                 <Routes>
                     <Route path="/login"  element={!user ? <Login />  : <Navigate to="/" />} />
                     <Route path="/signup" element={!user ? <Signup /> : <Navigate to="/" />} />
+                    <Route path="/dashboard" element={<Navigate to="/" replace />} />
                     <Route path="/"       element={<ProtectedRoute><Feed /></ProtectedRoute>} />
+                    {/* Fallback for any unknown routes to prevent blank screens */}
+                    <Route path="*"       element={<Navigate to="/" replace />} />
                 </Routes>
             </Box>
         </Router>
