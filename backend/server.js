@@ -10,9 +10,23 @@ const notificationRoutes = require('./routes/notifications');
 
 const app = express();
 
-// Middleware
+// Middleware - Enhanced CORS to handle deployment origins correctly
+const allowedOrigins = [
+    process.env.FRONTEND_URL,
+    'https://task-planet-ten.vercel.app', // Adding explicitly for robustness
+    'http://localhost:5173'
+].filter(Boolean);
+
 app.use(cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    origin: function (origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) !== -1 || origin.endsWith('vercel.app')) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
