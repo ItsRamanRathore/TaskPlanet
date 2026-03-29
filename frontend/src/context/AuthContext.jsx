@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import LoadingScreen from '../components/LoadingScreen';
 
 export const AuthContext = createContext();
 
@@ -16,7 +17,11 @@ export const AuthProvider = ({ children }) => {
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             fetchProfile();
         } else {
-            setLoading(false);
+            // Briefly delay setting loading(false) to ensure smooth transition
+            const timer = setTimeout(() => {
+                setLoading(false);
+            }, 600);
+            return () => clearTimeout(timer);
         }
     }, []);
 
@@ -33,7 +38,10 @@ export const AuthProvider = ({ children }) => {
                 logout();
             }
         } finally {
-            setLoading(false);
+            // Give a bit of extra time for the loading screen to feel natural
+            setTimeout(() => {
+                setLoading(false);
+            }, 600);
         }
     };
 
@@ -56,7 +64,7 @@ export const AuthProvider = ({ children }) => {
 
     return (
         <AuthContext.Provider value={{ user, login, logout, loading }}>
-            {!loading && children}
+            {loading ? <LoadingScreen /> : children}
         </AuthContext.Provider>
     );
 };
