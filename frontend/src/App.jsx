@@ -81,13 +81,42 @@ const AppContent = () => {
     );
 };
 
+class ErrorBoundary extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { hasError: false, error: null };
+    }
+    static getDerivedStateFromError(error) {
+        return { hasError: true, error };
+    }
+    componentDidCatch(error, errorInfo) {
+        console.error('ErrorBoundary caught an error:', error, errorInfo);
+    }
+    render() {
+        if (this.state.hasError) {
+            return (
+                <div style={{ padding: '20px', color: 'red', background: 'white' }}>
+                    <h1>CRITICAL RENDER ERROR</h1>
+                    <pre>{this.state.error?.toString()}</pre>
+                </div>
+            );
+        }
+        return this.props.children;
+    }
+}
+
 function App() {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <AuthProvider>
-                <AppContent />
-            </AuthProvider>
+            <div id="diagnostics-mount-check" style={{ position: 'fixed', top: 0, left: 0, padding: '2px', fontSize: '10px', color: '#ccc', zIndex: 9999 }}>
+                App Mount OK
+            </div>
+            <ErrorBoundary>
+                <AuthProvider>
+                    <AppContent />
+                </AuthProvider>
+            </ErrorBoundary>
         </ThemeProvider>
     );
 }
