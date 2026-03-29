@@ -3,10 +3,8 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
 
-const authRoutes = require('./routes/auth');
-const postRoutes = require('./routes/posts');
-const userRoutes = require('./routes/users');
-const notificationRoutes = require('./routes/notifications');
+const userRoutes = require('./user/routes');
+const postRoutes = require('./post/routes');
 
 const app = express();
 
@@ -35,10 +33,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static('uploads'));
 
 // Routes
-app.use('/api/auth', authRoutes);
+app.use('/api/auth', userRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/users', userRoutes);
-app.use('/api/notifications', notificationRoutes);
+app.use('/api/notifications', userRoutes);
 
 // Health Check
 app.get('/api/health', (req, res) => {

@@ -1,9 +1,9 @@
 const express = require('express');
-const Post = require('../models/Post');
-const auth = require('../middleware/auth');
+const Post = require('./Post');
+const auth = require('../user/middleware');
 const multer = require('multer');
 const path = require('path');
-const Notification = require('../models/Notification');
+const Notification = require('../user/Notification');
 const cloudinary = require('cloudinary').v2;
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
@@ -223,7 +223,7 @@ router.post('/:id/comment', auth, async (req, res) => {
 
         const newComment = {
             user: userId,
-            username: username, // Saving username directly as allowed/requested
+            username: username,
             text: text
         };
 

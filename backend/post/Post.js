@@ -6,7 +6,7 @@ const CommentSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    username: { // Storing username for absolute guarantee as requested or just populate? Populate is better, but saving username is faster for reads. Let's do both or just populate. User guide says "Save the usernames".
+    username: { 
         type: String, 
         required: true
     },
