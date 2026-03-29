@@ -109,7 +109,7 @@ const NotificationDropdown = ({ anchorEl, open, onClose, onNotificationRead }) =
                             >
                                 <ListItemAvatar sx={{ minWidth: 56, position: 'relative' }}>
                                     <Avatar sx={{ width: 40, height: 40, bgcolor: '#1877f2' }}>
-                                        {n.sender?.username?.[0].toUpperCase()}
+                                        {n.sender?.username?.[0]?.toUpperCase() || '?'}
                                     </Avatar>
                                     <Box sx={{ 
                                         position: 'absolute', bottom: 0, right: 12, 

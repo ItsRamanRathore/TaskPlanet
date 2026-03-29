@@ -21,9 +21,9 @@ import axios from 'axios';
 
 const PostCard = ({ post }) => {
     const { user, login } = useContext(AuthContext); // login is used to refresh user state
-    const [likes, setLikes] = useState(post.likes || []);
-    const [comments, setComments] = useState(post.comments || []);
-    const [liked, setLiked] = useState(user ? post.likes.includes(user._id) : false);
+    const [likes, setLikes] = useState(post?.likes || []);
+    const [comments, setComments] = useState(post?.comments || []);
+    const [liked, setLiked] = useState(user && post?.likes ? post.likes.includes(user._id) : false);
     const [showComments, setShowComments] = useState(false);
     const [commentText, setCommentText] = useState('');
     const [isFollowing, setIsFollowing] = useState(false);
@@ -123,7 +123,7 @@ const PostCard = ({ post }) => {
             <CardHeader
                 avatar={
                     <Avatar sx={{ bgcolor: '#1877f2', width: 40, height: 40, fontWeight: 700 }}>
-                        {post.user?.username?.[0].toUpperCase()}
+                        {post.user?.username?.[0]?.toUpperCase() || '?'}
                     </Avatar>
                 }
                 action={
@@ -257,7 +257,7 @@ const PostCard = ({ post }) => {
                             {comments.map((comment, idx) => (
                                 <ListItem key={idx} alignItems="flex-start" sx={{ px: 0, py: 0.8 }}>
                                     <ListItemAvatar sx={{ minWidth: 42 }}>
-                                        <Avatar sx={{ width: 32, height: 32, fontSize: 14 }}>{comment.username?.[0].toUpperCase()}</Avatar>
+                                        <Avatar sx={{ width: 32, height: 32, fontSize: 14 }}>{comment.username?.[0]?.toUpperCase() || '?'}</Avatar>
                                     </ListItemAvatar>
                                     <Paper elevation={0} sx={{ bgcolor: '#f0f2f5', px: 2, py: 1, borderRadius: 3, maxWidth: '85%' }}>
                                         <Typography variant="subtitle2" fontWeight={700}>{comment.username}</Typography>
@@ -269,7 +269,7 @@ const PostCard = ({ post }) => {
                     )}
 
                     <Box component="form" onSubmit={handleAddComment} sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-                        <Avatar sx={{ width: 32, height: 32, fontSize: 14 }}>{user?.username?.[0].toUpperCase()}</Avatar>
+                        <Avatar sx={{ width: 32, height: 32, fontSize: 14 }}>{user?.username?.[0]?.toUpperCase() || '?'}</Avatar>
                         <TextField
                             fullWidth size="small" placeholder="Write a comment..."
                             sx={{ '& .MuiOutlinedInput-root': { borderRadius: 10, bgcolor: '#f0f2f5' } }}

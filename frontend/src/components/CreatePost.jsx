@@ -113,7 +113,7 @@ const CreatePost = ({ onPostCreated }) => {
 
                 <Box sx={{ display: 'flex', gap: 1.5, mb: 1.5 }}>
                     <Avatar sx={{ width: 42, height: 42, bgcolor: '#1877f2', fontSize: 18 }}>
-                        {user?.username?.[0].toUpperCase()}
+                        {user?.username?.[0]?.toUpperCase() || '?'}
                     </Avatar>
                     <TextField
                         fullWidth

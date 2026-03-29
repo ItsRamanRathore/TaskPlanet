@@ -190,7 +190,7 @@ const Navbar = () => {
                             width: 36, height: 36, border: '2px solid #1877f2', padding: '2px',
                             bgcolor: 'white', color: '#1877f2'
                         }}>
-                            {user?.username?.[0].toUpperCase()}
+                            {user?.username?.[0]?.toUpperCase() || '?'}
                         </Avatar>
                         <Box>
                             <Typography variant="subtitle2" fontWeight={700} sx={{ lineHeight: 1 }}>{user?.username}</Typography>
