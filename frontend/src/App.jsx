@@ -62,7 +62,8 @@ const ProtectedRoute = ({ children }) => {
 };
 
 const AppContent = () => {
-    const { user } = useContext(AuthContext);
+    const { user, loading } = useContext(AuthContext);
+    console.log('App: Rendering AppContent. User:', user, 'Loading:', loading);
     return (
         <Router>
             {user && <Navbar />}

@@ -21,28 +21,33 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const fetchProfile = async () => {
+        console.log('Auth: Fetching profile...');
+        setLoading(true);
         try {
             const res = await axios.get('/users/profile');
-            if (res.data) {
+            console.log('Auth: Profile response:', res.data);
+            if (res.data && typeof res.data === 'object') {
                 setUser(prev => prev ? { ...prev, ...res.data } : res.data);
+            } else {
+                console.warn('Auth: Invalid profile data format');
             }
         } catch (err) {
-            console.error('Failed to fetch profile', err);
-            // Only logout if it's a 401 Unauthorized
+            console.error('Auth: Failed to fetch profile', err);
             if (err.response?.status === 401) {
                 logout();
             }
         } finally {
+            console.log('Auth: Setting loading to false');
             setLoading(false);
         }
     };
 
     const login = (token, username, userId) => {
+        console.log('Auth: Logging in...', username);
         localStorage.setItem('token', token);
         localStorage.setItem('username', username);
         localStorage.setItem('userId', userId);
         axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        // Set basic user info immediately to avoid redirect loops
         setUser({ _id: userId, username });
         fetchProfile();
     };
