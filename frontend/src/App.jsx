@@ -1,5 +1,5 @@
+import React, { useContext } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { useContext } from 'react';
 import { AuthContext, AuthProvider } from './context/AuthContext';
 import Navbar from './components/Navbar';
 import Feed from './pages/Feed';
