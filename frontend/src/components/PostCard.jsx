@@ -2,7 +2,8 @@ import { useState, useContext, useEffect } from 'react';
 import { 
     Card, CardHeader, CardContent, CardActions, Avatar, Typography, IconButton, 
     Box, Divider, TextField, Button, List, ListItem, ListItemText, ListItemAvatar,
-    Collapse, Stack, Tooltip, Paper, Menu, MenuItem, Dialog, DialogTitle, DialogContent, DialogActions
+    Collapse, Stack, Tooltip, Paper, Menu, MenuItem, Dialog, DialogTitle, DialogContent, DialogActions,
+    Chip
 } from '@mui/material';
 import { 
     Favorite as FavoriteIcon, 
