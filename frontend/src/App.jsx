@@ -62,8 +62,7 @@ const ProtectedRoute = ({ children }) => {
 };
 
 const AppContent = () => {
-    const { user, loading } = useContext(AuthContext);
-    console.log('App: Rendering AppContent. User:', user, 'Loading:', loading);
+    const { user } = useContext(AuthContext);
     return (
         <Router>
             {user && <Navbar />}
@@ -109,9 +108,6 @@ function App() {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <div id="diagnostics-mount-check" style={{ position: 'fixed', top: 0, left: 0, padding: '2px', fontSize: '10px', color: '#ccc', zIndex: 9999 }}>
-                App Mount OK
-            </div>
             <ErrorBoundary>
                 <AuthProvider>
                     <AppContent />

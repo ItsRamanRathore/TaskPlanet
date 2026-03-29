@@ -21,15 +21,11 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const fetchProfile = async () => {
-        console.log('Auth: Fetching profile...');
         setLoading(true);
         try {
             const res = await axios.get('/users/profile');
-            console.log('Auth: Profile response:', res.data);
             if (res.data && typeof res.data === 'object') {
                 setUser(prev => prev ? { ...prev, ...res.data } : res.data);
-            } else {
-                console.warn('Auth: Invalid profile data format');
             }
         } catch (err) {
             console.error('Auth: Failed to fetch profile', err);
@@ -37,13 +33,11 @@ export const AuthProvider = ({ children }) => {
                 logout();
             }
         } finally {
-            console.log('Auth: Setting loading to false');
             setLoading(false);
         }
     };
 
     const login = (token, username, userId) => {
-        console.log('Auth: Logging in...', username);
         localStorage.setItem('token', token);
         localStorage.setItem('username', username);
         localStorage.setItem('userId', userId);
